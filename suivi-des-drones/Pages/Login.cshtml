@@ -1,0 +1,27 @@
+﻿@page "/login"
+@model suivi_des_drones.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login et Mot de Passe";
+    string title = "Connexion".ToUpper();
+}
+
+<h2>@title</h2>
+
+<div>    
+    <form method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Adresse Email</label>
+            <input asp-for="_login.Email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="login@motdepasse.com">
+            <small id="emailHelp" class="form-text text-muted">Vous devez saisir une adresse mail valide.</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Mot de passe</label>
+            <input type="password" asp-for="_login.Password" class="form-control" placeholder="Mot de passe">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

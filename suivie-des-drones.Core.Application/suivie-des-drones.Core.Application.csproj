@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <RootNamespace>suivie_des_drones.Core.Application</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\suivi-des-drones.Core.Infrastructure\suivi-des-drones.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\suivi-des-drones.Core.Models\suivi-des-drones.Core.Models.csproj" />
+    <ProjectReference Include="..\suivie-des-drones.Cores.Interfaces\suivie-des-drones.Cores.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

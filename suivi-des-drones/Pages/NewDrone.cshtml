@@ -1,0 +1,68 @@
+﻿@page
+@using suivi_des_drones.Core.Models;
+<!-- Arobasepage "/creation-drone"  pour faire de la redirection-->
+@model suivi_des_drones.Pages.NewDroneModel
+@{
+    ViewData["Title"] = "Nouveau Drone";
+    string title = "Suivi des drones".ToUpper();
+
+}
+
+@{
+    List<HealthStatus> ListeHealthstatut()
+    {
+        return this.Model.ListHeal;
+    }
+}
+
+
+<main>
+    <div class="container-md">
+        <diV class="text-center">
+            <h1 class="text-center"> @title </h1>
+            <p class="lead">Formulaire pour la saisie de drone dans la base de donneé.</p>
+        </diV>
+    </div>
+    <div class="row align-items-start">
+        <h4 class="mb-3">Saisie Drone</h4>
+        <form method="post">
+            <div class="mb-3 row">
+                <label for="matricule" class="col-sm-2 col-form-label" >Matricule</label>
+                <input asp-for="Drone.Matricule" type="text" class="for-control-lg"  placeholder="Saisir le matricule du drone." >
+                <span asp-validation-for="Drone.Matricule">*</span>
+                <!--<div class="invalid-feedback">Le matricule du drone est obligatoire et unique. Il sert pour son identification.</div>-->    
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="creationDate">Date de fabrication:</label>
+                <input asp-for="Drone.CreationDate"  class="for-control" placeholder="Saisir la date de fabrication du drone." >
+                <!--<span asp-validation-for="Drone.CreationDate">*</span>-->
+                <!--<div class="invalid-feedback">La date de fabrication est obligatoire.</div>-->
+            </div>
+
+            <div class="mb-3 row">
+                <select class="form-select form-select-lg mb-3" asp-for="Drone.StatusId" aria-label=".form-select-lg example">
+                    @{
+                        Func<dynamic, object> SelectOption = @<option selected value="@item.Id">@item.Label</option>;
+                        Func<dynamic, object> NoSelect =@<option value="@item.Id">@item.Label</option>;
+                    }
+                    @foreach (var item in ListeHealthstatut())
+                    {
+                        if (item.Id == 1) @SelectOption(@item) else @NoSelect(@item);
+                    }
+                </select>
+            </div>
+            <div class="mb-3 row">
+                 <button class="btn btn-primary">Enregistrer</button>   
+            </div>
+        </form>
+
+    </div>
+
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

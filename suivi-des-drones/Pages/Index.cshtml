@@ -1,0 +1,125 @@
+﻿@page
+@using suivi_des_drones.Core.Models;
+@model IndexModel
+@{
+    ViewData["Title"] = "Page d'accueil";
+    string title = GetTitle("Suivi des drones");
+    
+}
+
+@functions{
+    //string titi = "coucou"; // propiété de la classe page
+    /*List<Drone> drones { get; set; } = new();
+            * 
+            List<Drone> PrepaListDrone()
+            {
+            return new()
+            {
+            new(){ CreationDate = DateTime.Now, Matricule = "1214MX" , Status = HealthStatus.OK},
+            new(){ CreationDate = DateTime.Now.AddMonths(-9) ,Matricule = "1214AT" , Status = HealthStatus.OK},
+    };
+    }*/
+
+    List<Drone> PrepaListDrone()
+    {
+        return this.Model.Drones??new();
+    }
+
+    List<string> PrepaFiltreMatricule()
+    {
+        return this.Model.FiltreMatricule;
+    }
+
+    List<HealthStatus> PrepaListStatus()
+    {
+        //throw new NotImplementedException();
+        return this.Model.ListeHealthStatus;
+    }
+
+    string GetTitle(string title){
+        return title.ToUpper();
+    }
+}
+
+<!--
+    <div class="text-center">
+        <h1 class="display-4">Suivi des drones</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    </div>
+-->
+
+<h1 class="text-center"> @title </h1>
+
+<div class="row">
+    <div class="col">Status : </div>
+    <div class="col">
+        @try
+        {
+            var list = PrepaListStatus();
+            <select>
+                @foreach (var item in list)
+                {
+                    <option value="@item.Id">@item.Label</option>
+                }
+            </select>
+        }
+        catch(Exception ex)
+        {
+         <div> 
+             <b style="color: red;">le filtre des status n'est pas disponible</b>
+         </div>
+        }finally{
+            <!--
+                <b>Done</b>
+            -->
+        }
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Matricule</th>
+            <th>Status</th>
+            <th>Date de création</th>
+        </tr>
+        <tr>
+            <th> 
+                <select>
+                @foreach (var item in PrepaFiltreMatricule())
+                {
+                    <option value=@item>@item</option>
+                }
+                </select>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in PrepaListDrone())
+        {
+            string style = "";
+
+            // délégué templété
+            Func<dynamic, object> BrokenTd =@<td class="@style">@item.Status.Label</td>;
+
+            style = item.Status.Id switch {
+                1 => "",
+                -1 => "text-danger",
+                _ => "text-warning"
+            };
+
+            /*if (item.Status.Id == HealthStatus.Broken.Id)
+            {
+                style = "text-danger";
+            }*/
+            <tr>
+                <td>@item.Matricule</td>
+                <td>@item.CreationDate.ToString("dd/MM/yyyy")</td>
+                @BrokenTd(@item);
+            </tr>
+        }
+        
+    </tbody>
+</table>
