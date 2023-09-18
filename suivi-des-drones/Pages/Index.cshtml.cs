@@ -7,9 +7,11 @@ using suivie_des_drones.Cores.Infrastructure.Database;
 using suivie_des_drones.Cores.Interfaces.Insfrastructure;
 using System.Text;
 using suivie_des_drones.Cores.Interfaces.Repository;
+using Microsoft.AspNetCore.Authorization;
 
 namespace suivi_des_drones.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         #region propriété

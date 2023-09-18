@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using suivi_des_drones.Areas.Identity.Data;
 
 namespace suivi_des_drones.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<AuthentificationUser> _userManager;
+        private readonly SignInManager<AuthentificationUser> _signInManager;
 
         public SetPasswordModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<AuthentificationUser> userManager,
+            SignInManager<AuthentificationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;

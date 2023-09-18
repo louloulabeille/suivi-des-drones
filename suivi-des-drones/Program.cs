@@ -9,9 +9,11 @@ using suivie_des_drones.Cores.Interfaces.Repository;
 using suivi_des_drones.Core.Infrastructure.Web.MiddleWare;
 using Microsoft.AspNetCore.Identity;
 using suivi_des_drones.Data;
+using suivi_des_drones.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("AuthentificationUserContextConnection") ?? throw new InvalidOperationException("Connection string 'AuthentificationUserContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("AuthentificationUserContextConnection") 
+    ?? throw new InvalidOperationException("Connection string 'AuthentificationUserContextConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
@@ -24,7 +26,17 @@ builder.Services.AddDbContext<DroneDbContext>(options =>
     options.UseSqlServer(builder.Configuration["Context:Sql"]);
 });
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthentificationUserContext>();
+builder.Services.AddDbContext<AuthentificationUserContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddDefaultIdentity<AuthentificationUser>(options => {
+    // toutes les options au niveau de l'authentification qui peuvent mettre en place
+        options.SignIn.RequireConfirmedAccount = true;
+    }).AddEntityFrameworkStores<AuthentificationUserContext>();
+
+
 builder.Services.AddScoped<IDroneDataLayer, SqlServerDroneDataLayer>();
 builder.Services.AddScoped<IRepositoryDrone, DroneRepository>();
 
@@ -58,7 +70,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();    // ajout de l'authentification de identity au niveau des pages 
 app.UseSession();
 app.UseAuthorization();
 
@@ -73,7 +85,7 @@ app.UseAuthorization();
     }
     await next.Invoke(context);
 });*/
-app.UseRedirectIfNotConnected(); // utilisation d"un middleware
+//app.UseRedirectIfNotConnected(); // utilisation d"un middleware
 
 app.MapRazorPages();
 

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -10,7 +11,7 @@ using suivie_des_drones.Cores.Interfaces.Repository;
 
 namespace suivi_des_drones.Pages
 {
-
+    [Authorize]
     public class NewDroneModel : PageModel
     {
         private readonly ILogger<NewDroneModel> _logger;

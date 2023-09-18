@@ -11,7 +11,7 @@ namespace suivie_des_drones.Cores.Infrastructure.Database
 {
     public class DroneDbContext : DbContext
     {
-        public DroneDbContext(DbContextOptions options) : base(options)
+        public DroneDbContext(DbContextOptions<DroneDbContext> options) : base(options)
         {
         }
 
