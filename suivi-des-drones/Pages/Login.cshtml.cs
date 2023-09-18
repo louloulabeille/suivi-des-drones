@@ -28,13 +28,26 @@ namespace suivi_des_drones.Pages
         public IActionResult OnPost()
         {
             var retour = this.Page();
-            
-            if (ModelState.IsValid && _loginRepository is not null)
+
+            try
             {
-                if (_loginRepository.IsValidLoggin(_login))
-                    return Redirect("Index");
+                if (ModelState.IsValid && _loginRepository is not null)
+                {
+                    Login login = _login;
+                    if (_loginRepository.IsValidLoggin(ref login))
+                    {
+                        _login = login;
+                        this.HttpContext.Session.SetInt32("UserId", _login.Id);
+                        return RedirectToPage("Index");
+                    }
+                }
+                
+            }
+            catch
+            {
 
             }
+
             return retour;
         }
 

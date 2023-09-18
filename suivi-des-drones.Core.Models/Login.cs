@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.ComponentModel.DataAnnotations;
 //using suivie_des_drones.Cores.Interfaces.Hash;
 
 
@@ -14,9 +15,11 @@ namespace suivi_des_drones.Core.Models
 
 
         public int Id { get; set; }
+        [EmailAddress]
         public string Email { get; set; } = string.Empty!;
         private string _password = string.Empty!;
 
+        [DataType(DataType.Password)]
         public string Password
         {
             get { return _password; }
@@ -33,14 +36,6 @@ namespace suivi_des_drones.Core.Models
 
             return string.Join("", tmpHash);
         }
-
-        /*public static byte[] HashPassword(string password, suivie_des_drones.Cores.Interfaces.Hash.IHasUSe hasUSe )
-        {
-            byte[] tmpSource = Encoding.ASCII.GetBytes(password);
-            HMACMD5 hMACMD5 = new();
-            return new MD5CryptoServiceProvider().ComputeHash(tmpSource);
-
-        }*/
 
     }
 }

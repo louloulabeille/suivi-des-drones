@@ -6,6 +6,7 @@ using suivie_des_drones.Core.Application.Repository;
 using suivi_des_drones.Core.Models;
 using suivi_des_drones.Core.Infrastructure.DataLayers;
 using suivie_des_drones.Cores.Interfaces.Repository;
+using suivi_des_drones.Core.Infrastructure.Web.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,16 @@ builder.Services.AddScoped<IRepositoryHealthStatus, HealthstatusRepository>();
 builder.Services.AddScoped<ILoginDataLayer, SqlServerLoginDataLayer>();
 builder.Services.AddScoped<IRepositoryLogin, LoginRepository>();
 
+
+// gestion des sessions
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    /*options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;*/
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,7 +53,21 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
 app.UseAuthorization();
+
+/*app.Use(async(context, next) => {
+
+    var id = context.Session.GetInt32("UserId");
+    var IsLoginPage = context.Request.Path.Value?.ToLower().Contains("login");
+    if (!id.HasValue && (!IsLoginPage.HasValue || !IsLoginPage.Value))
+    {
+        context.Response.Redirect("login");
+        return;
+    }
+    await next.Invoke(context);
+});*/
+app.UseRedirectIfNotConnected(); // utilisation d"un middleware
 
 app.MapRazorPages();
 

@@ -46,6 +46,7 @@ namespace suivi_des_drones.Pages
             try
             {
                 IActionResult result = this.Page();
+                
                 SetListDrone();
                 SetListFiltreDrone();
                 SetListFiltreStatus();

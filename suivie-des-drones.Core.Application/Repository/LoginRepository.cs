@@ -18,9 +18,9 @@ namespace suivie_des_drones.Core.Application.Repository
             _dataLayer = dataLayer;
         }
 
-        public bool IsValidLoggin(Login login)
+        public bool IsValidLoggin(ref Login login)
         {
-            return _dataLayer.IsValidLoggin(login);
+            return _dataLayer.IsValidLoggin(ref login);
         }
     }
 }

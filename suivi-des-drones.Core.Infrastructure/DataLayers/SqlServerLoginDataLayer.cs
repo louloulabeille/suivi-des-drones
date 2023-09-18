@@ -15,13 +15,14 @@ namespace suivi_des_drones.Core.Infrastructure.DataLayers
         public SqlServerLoginDataLayer(DroneDbContext context) : base (context) { }
         
 
-        public bool IsValidLoggin(Login login)
+        public bool IsValidLoggin(ref Login login)
         {
+            Login log = login;
             var logins = from item in Context.Login
-                         where item.Password.Equals(login.Password) &&
-                         item.Email == login.Email
+                         where item.Password.Equals(log.Password) &&
+                         item.Email == log.Email
                          select item;
-
+            login = logins.First();
             return logins.Any();
         }
     }

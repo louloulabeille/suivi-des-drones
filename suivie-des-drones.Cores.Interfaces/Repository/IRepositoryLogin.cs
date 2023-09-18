@@ -9,6 +9,6 @@ namespace suivie_des_drones.Cores.Interfaces.Repository
 {
     public interface IRepositoryLogin
     {
-        public bool IsValidLoggin(Login login);
+        public bool IsValidLoggin(ref Login login);
     }
 }
