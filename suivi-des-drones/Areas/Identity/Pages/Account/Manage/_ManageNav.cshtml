@@ -1,4 +1,5 @@
-﻿@inject SignInManager<AuthentificationUser> SignInManager
+﻿@using suivi_des_drones.Core.Infrastructure
+@inject SignInManager<AuthentificationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

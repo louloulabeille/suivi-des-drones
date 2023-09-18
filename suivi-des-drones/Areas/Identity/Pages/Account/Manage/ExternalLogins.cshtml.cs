@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using suivi_des_drones.Areas.Identity.Data;
+using suivi_des_drones.Core.Infrastructure;
 
 namespace suivi_des_drones.Areas.Identity.Pages.Account.Manage
 {

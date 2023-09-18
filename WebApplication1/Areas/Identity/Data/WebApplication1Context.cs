@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using suivi_des_drones.Areas.Identity.Data;
+using WebApplication1.Areas.Identity.Data;
 
-namespace suivi_des_drones.Data;
+namespace WebApplication1.Data;
 
-public class AuthentificationUserContext : IdentityDbContext<AuthentificationUser>
+public class WebApplication1Context : IdentityDbContext<WebApplication1User>
 {
-    public AuthentificationUserContext(DbContextOptions<AuthentificationUserContext> options)
+    public WebApplication1Context(DbContextOptions<WebApplication1Context> options)
         : base(options)
     {
     }

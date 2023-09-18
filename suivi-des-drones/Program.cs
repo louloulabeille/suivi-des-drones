@@ -1,15 +1,10 @@
 using suivie_des_drones.Cores.Infrastructure.Database;
-using Microsoft.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using suivie_des_drones.Cores.Interfaces.Insfrastructure;
 using suivie_des_drones.Core.Application.Repository;
-using suivi_des_drones.Core.Models;
 using suivi_des_drones.Core.Infrastructure.DataLayers;
 using suivie_des_drones.Cores.Interfaces.Repository;
-using suivi_des_drones.Core.Infrastructure.Web.MiddleWare;
-using Microsoft.AspNetCore.Identity;
-using suivi_des_drones.Data;
-using suivi_des_drones.Areas.Identity.Data;
+using suivi_des_drones.Core.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthentificationUserContextConnection") 
