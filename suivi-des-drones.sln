@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exemple", "Exemple", "{7455
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{DF897797-A679-4762-B73C-5AEED5307A85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "suivi-des-drones.Core.Infrastructure.Web", "suivi-des-drones.Core.Infrastructure.Web\suivi-des-drones.Core.Infrastructure.Web.csproj", "{B835928E-DBF0-476F-B888-E2A16C33D543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "suivi-des-drones.Core.Infrastructure.Web", "suivi-des-drones.Core.Infrastructure.Web\suivi-des-drones.Core.Infrastructure.Web.csproj", "{B835928E-DBF0-476F-B888-E2A16C33D543}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
