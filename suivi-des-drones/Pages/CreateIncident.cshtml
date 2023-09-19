@@ -1,0 +1,52 @@
+﻿@page
+@model suivi_des_drones.Pages.CreateIncidentModel
+@{
+    ViewData["Title"] = "Déclaration d'incident";
+    string title = "Déclaration d'incident de drones";
+}
+
+
+<div class="container-md">
+    <diV class="text-center">
+        <h1 class="text-center"> @title </h1>
+        <p class="lead">Formulaire pour la saisie d'incident de drone'.</p>
+    </diV>
+</div>
+<div class="container-md">
+    <form method="post" enctype="multipart/form-data">
+        <div class="mb-3 row">
+            <input type="file" asp-for="PictureFile"/>
+        </div>
+        <div class="mb-3 row">
+            <button class="btn btn-primary">Envoyer</button>
+        </div>
+    </form>
+</div>
+<div class="container-md" id="incident">
+
+</div>
+
+@section script{
+    <script>
+        class IncidentService {
+            async LoadAll() {
+
+            }
+        }
+        
+        const container = document.querySelector("#incident");
+        const timer = 500;
+        
+        setIntervale(() => {
+            let html = '';
+            const data = (new IncidentService()).LoadAll();
+            data.forEach(incident => {
+                let row = '<span><i>${incident}</i</span> <br>';
+                html += row;
+            });
+            container.innerHTML = html;
+
+        },timer);
+        
+    </script>
+}
