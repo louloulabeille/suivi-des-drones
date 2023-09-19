@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using suivi_des_drones.Core.Models;
 using suivie_des_drones.Cores.Infrastructure.Database;
 using suivie_des_drones.Cores.Interfaces.Insfrastructure;
@@ -47,12 +48,7 @@ namespace suivi_des_drones.Core.Infrastructure.DataLayers
 
         public ICollection<Drone> GetAllNoTracking()
         {
-            return Context.Drones.AsNoTracking().ToList();
-        }
-
-        public Drone? GetById(int id)
-        {
-            return Context.Drones.Find(id);
+            return Context.Drones.Include(i=>i.Status).AsNoTracking<Drone>().ToList();
         }
 
         public Drone? GetById(string id)
@@ -74,5 +70,23 @@ namespace suivi_des_drones.Core.Infrastructure.DataLayers
         {
             return Context.SaveChanges();
         }
+
+        public void Update(Drone item)
+        {
+            Drone? drone = Context.Drones.Find(item.Matricule); // retourne le drone attaché au Context
+            if (string.IsNullOrEmpty(item.Matricule) || drone is null)
+                return;
+            
+            // comme j'affiche la liste avant et après je fais une modification vers une autre fenêtre
+            // le context garde le drone qui a été trouvé dans la liste et il est bloqué
+            // voici pour débloqué celui qui est géré dans le context et après passé item en modified
+            Context.Entry<Drone>(drone).State = EntityState.Detached;
+            Context.Entry<Drone>(item).State = EntityState.Modified; // après si c'est le même pas grave
+            //////////////////////// -- je ne sais pas s'il faut le faire comme ceci
+
+            if (Context.Entry<Drone>(item).State == EntityState.Modified)
+                Context.SaveChanges();
+        }
+
     }
 }

@@ -17,6 +17,7 @@ namespace suivie_des_drones.Cores.Interfaces.Insfrastructure
         public void RemoveRange(ICollection<Drone> items);
         public Drone? GetById(string id);
         public void AddRange(ICollection<Drone> items);
+        public void Update(Drone item);
         public int Save ();
         public ICollection<Drone> Find(Expression<Func<Drone,bool>> predicate);
     }

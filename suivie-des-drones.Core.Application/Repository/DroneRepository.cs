@@ -38,9 +38,11 @@ namespace suivie_des_drones.Core.Application.Repository
             return _dataLayer.GetAllNoTracking();
         }
 
-        public Drone? GetById(string id)
+        public Drone GetById(string id)
         {
-            return _dataLayer.GetById(id);
+            Drone? drone = _dataLayer.GetById(id);
+            if (drone == null) throw new ArgumentNullException("matricule");
+            return drone;
         }
 
         public void Remove(Drone item)
@@ -56,6 +58,11 @@ namespace suivie_des_drones.Core.Application.Repository
         public int Save()
         {
             return _dataLayer.Save();
+        }
+
+        public void Update(Drone item)
+        {
+            _dataLayer.Update(item);
         }
     }
 }

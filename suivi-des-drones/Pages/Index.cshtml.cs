@@ -70,7 +70,7 @@ namespace suivi_des_drones.Pages
         #region methode interne
         private void SetListDrone()
         {
-            Drones = _repository.GetAll().OrderByDescending(s=>s.CreationDate).OrderBy(l=>l.Matricule).ToList();
+            Drones = _repository.GetAllNoTracking().OrderByDescending(s=>s.CreationDate).OrderBy(l=>l.Matricule).ToList();
             /*Drones.AddRange(new List<Drone>()
             {
                 new(){ CreationDate = DateTime.Now, Matricule = "1214MX" , Status = HealthStatus.OK},

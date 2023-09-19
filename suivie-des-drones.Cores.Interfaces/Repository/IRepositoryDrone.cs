@@ -14,7 +14,8 @@ namespace suivie_des_drones.Cores.Interfaces.Repository
         public void Add(Drone item);
         public void Remove(Drone item);
         public void RemoveRange(ICollection<Drone> items);
-        public Drone? GetById(string id);
+        public Drone GetById(string id);
+        public void Update(Drone item);
         public void AddRange(ICollection<Drone> items);
         public int Save();
     }

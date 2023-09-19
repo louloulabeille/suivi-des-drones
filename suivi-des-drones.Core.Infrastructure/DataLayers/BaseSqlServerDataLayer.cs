@@ -11,7 +11,7 @@ namespace suivi_des_drones.Core.Infrastructure.DataLayers
 
     public abstract class BaseSqlServerDataLayer
     {
-        private  readonly DroneDbContext _context;
+        private readonly DroneDbContext _context;
 
         public BaseSqlServerDataLayer(DroneDbContext dbContext)
         {

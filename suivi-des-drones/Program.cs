@@ -5,6 +5,7 @@ using suivie_des_drones.Core.Application.Repository;
 using suivi_des_drones.Core.Infrastructure.DataLayers;
 using suivie_des_drones.Cores.Interfaces.Repository;
 using suivi_des_drones.Core.Infrastructure;
+using suivi_des_drones.Core.Infrastructure.Web.Constraint;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthentificationUserContextConnection") 
@@ -16,21 +17,26 @@ builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
     options.Conventions.AddPageRoute("/NewDrone", "/creation-drone");   // redirection url
 });
 
+#region DbContext
 builder.Services.AddDbContext<DroneDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration["Context:Sql"]);
+    
 });
 
 builder.Services.AddDbContext<AuthentificationUserContext>(options =>
 {
     options.UseSqlServer(connectionString);
+    
 });
+#endregion
 
 builder.Services.AddDefaultIdentity<AuthentificationUser>(options => {
     // toutes les options au niveau de l'authentification qui peuvent mettre en place
         options.SignIn.RequireConfirmedAccount = true;
     }).AddEntityFrameworkStores<AuthentificationUserContext>();
 
+#region injection Model & WorkOfUnit & Repository
 
 builder.Services.AddScoped<IDroneDataLayer, SqlServerDroneDataLayer>();
 builder.Services.AddScoped<IRepositoryDrone, DroneRepository>();
@@ -41,6 +47,10 @@ builder.Services.AddScoped<IRepositoryHealthStatus, HealthstatusRepository>();
 builder.Services.AddScoped<ILoginDataLayer, SqlServerLoginDataLayer>();
 builder.Services.AddScoped<IRepositoryLogin, LoginRepository>();
 
+builder.Services.AddScoped<IDelivreryDataLayer, SqlServerDelivreryDataLayer>();
+builder.Services.AddScoped<IRepositoryDelivrery, DelivreryRepository>();
+
+#endregion
 
 // gestion des sessions
 builder.Services.AddSession(options =>
@@ -49,7 +59,10 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+builder.Services.Configure<RouteOptions>(options => {
 
+    options.ConstraintMap.Add("matricule-contraint",typeof(MatriculeRouteConstraint));
+});
 
 var app = builder.Build();
 

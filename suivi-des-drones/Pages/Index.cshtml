@@ -99,25 +99,23 @@
     <tbody>
         @foreach (var item in PrepaListDrone())
         {
-            string style = "";
-
-            // délégué templété
-            Func<dynamic, object> BrokenTd =@<td class="@style">@item.Status.Label</td>;
-
-            style = item.Status.Id switch {
+            string style = item.Status.Id switch {
                 1 => "",
                 -1 => "text-danger",
                 _ => "text-warning"
             };
+
+            // délégué templété
+            Func<dynamic, object> BrokenTd =@<td class="@style">@item.Status.Label</td>;
 
             /*if (item.Status.Id == HealthStatus.Broken.Id)
             {
                 style = "text-danger";
             }*/
             <tr>
-                <td>@item.Matricule</td>
+                <td><a asp-page="/OneDrone" asp-route-matricule="@item.Matricule">@item.Matricule</a></td>
                 <td>@item.CreationDate.ToString("dd/MM/yyyy")</td>
-                @BrokenTd(@item);
+                @BrokenTd(@item)
             </tr>
         }
         

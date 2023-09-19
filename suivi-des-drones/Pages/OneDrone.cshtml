@@ -1,11 +1,10 @@
-﻿@page 
+﻿@page "/drone/{matricule:matricule-contraint}"
+<!--page //"/drone/{matricule:required:minlength(5)}"-->
 @using suivi_des_drones.Core.Models;
-<!-- Arobasepage "/creation-drone"  pour faire de la redirection-->
-@model suivi_des_drones.Pages.NewDroneModel
+@model suivi_des_drones.Pages.OneDroneModel
 @{
-    ViewData["Title"] = "Nouveau Drone";
-    string title = "Suivi des drones".ToUpper();
-
+    ViewData["Title"] = "Drone";
+    string title = "Suivi du drone";
 }
 
 @{
@@ -15,27 +14,26 @@
     }
 }
 
-
 <main>
     <div class="container-md">
         <diV class="text-center">
             <h1 class="text-center"> @title </h1>
-            <p class="lead">Formulaire pour la saisie de drone dans la base de donneé.</p>
+            <p class="lead">Formulaire pour la modification du drone.</p>
         </diV>
     </div>
     <div class="row align-items-start">
-        <h4 class="mb-3">Saisie Drone</h4>
+        <h4 class="mb-3">Modification Drone</h4>
         <form method="post">
             <div class="mb-3 row">
                 <label for="matricule" class="col-sm-2 col-form-label" >Matricule</label>
-                <input asp-for="Drone.Matricule" type="text" class="for-control-lg" placeholder="Saisir le matricule du drone." >
+                <input asp-for="Drone.Matricule" type="text" readonly class="for-control-lg"  placeholder="Saisir le matricule du drone." >
                 <span asp-validation-for="Drone.Matricule">*</span>
                 <!--<div class="invalid-feedback">Le matricule du drone est obligatoire et unique. Il sert pour son identification.</div>-->    
             </div>
 
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" for="creationDate">Date de fabrication:</label>
-                <input asp-for="Drone.CreationDate"  class="for-control" placeholder="Saisir la date de fabrication du drone." >
+                <input asp-for="Drone.CreationDate" class="for-control" placeholder="Saisir la date de fabrication du drone." >
                 <!--<span asp-validation-for="Drone.CreationDate">*</span>-->
                 <!--<div class="invalid-feedback">La date de fabrication est obligatoire.</div>-->
             </div>
@@ -48,7 +46,7 @@
                     }
                     @foreach (var item in ListeHealthstatut())
                     {
-                        if (item.Id == 1) @SelectOption(@item) else @NoSelect(@item);
+                        if (item.Id == this.Model.Drone.StatusId) @SelectOption(@item) else @NoSelect(@item);
                     }
                 </select>
             </div>
@@ -64,5 +62,4 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-
 
