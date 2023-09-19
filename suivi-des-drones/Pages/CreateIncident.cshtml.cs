@@ -8,7 +8,7 @@ namespace suivi_des_drones.Pages
     {
         #region Propriétés
         [BindProperty]
-        public IFormFile PictureFile { get; set; } = default!;
+        public IFormFile? PictureFile { get; set; }
 
         private readonly IHostEnvironment _environment;
         private readonly ILogger<CreateIncidentModel> logger;
@@ -27,8 +27,12 @@ namespace suivi_des_drones.Pages
         {
             IActionResult result = Page();
 
-            using var file = new FileStream(_environment.ContentRootPath+"./" + PictureFile.FileName, FileMode.OpenOrCreate);
-            await PictureFile.CopyToAsync(file);
+            if ( PictureFile is not null )
+            {
+                using var file = new FileStream(_environment.ContentRootPath + "./" + PictureFile.FileName, FileMode.OpenOrCreate);
+                await PictureFile.CopyToAsync(file);
+            }
+            
 
             return result;
         }

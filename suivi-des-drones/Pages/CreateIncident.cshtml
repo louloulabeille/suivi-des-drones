@@ -1,9 +1,12 @@
 ﻿@page
 @model suivi_des_drones.Pages.CreateIncidentModel
+@inject LinkGenerator linkeGenerator
 @{
     ViewData["Title"] = "Déclaration d'incident";
     string title = "Déclaration d'incident de drones";
 }
+
+
 
 
 <div class="container-md">
@@ -22,31 +25,35 @@
         </div>
     </form>
 </div>
-<div class="container-md" id="incident">
+<div id="incident">
 
 </div>
 
-@section script{
-    <script>
+@section scripts{
+    <script> // de l'ajax
         class IncidentService {
-            async LoadAll() {
+            async loadAll() {
+                const url = '@linkeGenerator.GetPathByPage(this.HttpContext,"Incident")';
+                const response = await fetch(url);
+                const data = await response.json();
 
+                return data;
             }
         }
         
         const container = document.querySelector("#incident");
         const timer = 500;
         
-        setIntervale(() => {
+        setInterval(async() => {
             let html = '';
-            const data = (new IncidentService()).LoadAll();
+            const data = await (new IncidentService()).loadAll();
+
             data.forEach(incident => {
-                let row = '<span><i>${incident}</i</span> <br>';
+                let row = `<span><i>${incident}</i></span> <br>`;
                 html += row;
             });
             container.innerHTML = html;
-
         },timer);
-        
+
     </script>
 }
