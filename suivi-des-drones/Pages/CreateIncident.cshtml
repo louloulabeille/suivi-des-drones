@@ -6,9 +6,6 @@
     string title = "Déclaration d'incident de drones";
 }
 
-
-
-
 <div class="container-md">
     <diV class="text-center">
         <h1 class="text-center"> @title </h1>
@@ -46,7 +43,8 @@
         class IncidentService {
             async loadAll() {
                 const url = '@linkeGenerator.GetPathByPage(this.HttpContext,"Incident")';
-                const response = await fetch(url);
+                const urlApi = '/api/incident/index'
+                const response = await fetch(urlApi);
                 const data = await response.json();
                 
                 return data;

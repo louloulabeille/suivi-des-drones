@@ -83,7 +83,7 @@ app.UseRouting();
 app.UseAuthentication();    // ajout de l'authentification de identity au niveau des pages 
 app.UseSession();
 app.UseAuthorization();
-
+app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 /*app.Use(async(context, next) => {
 
     var id = context.Session.GetInt32("UserId");

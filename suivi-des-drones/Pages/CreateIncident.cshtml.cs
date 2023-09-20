@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using NuGet.Common;
 
 namespace suivi_des_drones.Pages
 {
+    [Authorize]
     public class CreateIncidentModel : PageModel
     {
         #region Propriétés
