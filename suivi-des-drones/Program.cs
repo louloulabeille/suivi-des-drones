@@ -37,19 +37,21 @@ builder.Services.AddDefaultIdentity<AuthentificationUser>(options => {
     }).AddEntityFrameworkStores<AuthentificationUserContext>();
 
 #region injection Model & WorkOfUnit & Repository
-
+// Drone
 builder.Services.AddScoped<IDroneDataLayer, SqlServerDroneDataLayer>();
 builder.Services.AddScoped<IRepositoryDrone, DroneRepository>();
-
+// HealthStatus
 builder.Services.AddScoped<IHealthStatusDataLayer, SqlServerHealthstatusDataLayer>();
 builder.Services.AddScoped<IRepositoryHealthStatus, HealthstatusRepository>();
-
+// Login
 builder.Services.AddScoped<ILoginDataLayer, SqlServerLoginDataLayer>();
 builder.Services.AddScoped<IRepositoryLogin, LoginRepository>();
-
+// Delivrery
 builder.Services.AddScoped<IDelivreryDataLayer, SqlServerDelivreryDataLayer>();
 builder.Services.AddScoped<IRepositoryDelivrery, DelivreryRepository>();
-
+// Incident
+builder.Services.AddScoped<IIncidentDataLayer, SqlServerIncidentDataLayer>();
+builder.Services.AddScoped<IRepositoryIncident, IncidentRepository>();
 #endregion
 
 // gestion des sessions

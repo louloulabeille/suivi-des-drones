@@ -24,7 +24,7 @@ namespace suivi_des_drones.Core.Infrastructure.Database.EntityConfiguration
                 .HasMaxLength(500);
             builder.Property(x=>x.PathFichier).HasMaxLength(255);
             builder.HasOne(x => x.IdDroneNav)
-                .WithOne(x=>x.Probleme).HasForeignKey<Incident>(x=>x.IdDrone);
+                .WithMany(x=>x.Problemes).HasForeignKey(x=>x.IdDrone);
         }
     }
 }
