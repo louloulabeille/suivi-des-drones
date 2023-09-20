@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /ConsoleApp/ConsoleApp.csproj
 /ConsoleApp/Program.cs
 /ScriptCreationTable.sql
+/suivi-des-drones/Pages/Incident.cshtml.cs
