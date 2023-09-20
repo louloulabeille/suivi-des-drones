@@ -25,7 +25,19 @@
         </div>
     </form>
 </div>
-<div id="incident">
+<div class="container-md">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Numéro accident</th>
+                <th>Identifiant du drone</th>
+                <th>Date de l'accident</th>
+                <th>Raison</th>
+            </tr>
+        </thead>
+        <tbody id="incident">
+        </tbody>
+    </table>
 
 </div>
 
@@ -36,20 +48,23 @@
                 const url = '@linkeGenerator.GetPathByPage(this.HttpContext,"Incident")';
                 const response = await fetch(url);
                 const data = await response.json();
-
+                
                 return data;
             }
         }
         
         const container = document.querySelector("#incident");
-        const timer = 500;
+        const timer = 1000;
         
         setInterval(async() => {
             let html = '';
             const data = await (new IncidentService()).loadAll();
 
             data.forEach(incident => {
-                let row = `<span><i>${incident}</i></span> <br>`;
+                //console.log(incident);
+                //let row = `<span><i>NumAccident ${incident.id} - Drone : ${incident.idDrone} - Date : ${incident.dateIncident} </i></span> <br>`;
+                const dateAc = new Date(incident.dateIncident);
+                let row = `<tr><td>${incident.id}</td><td>${incident.idDrone}</td><td>${dateAc.toLocaleDateString('fr-FR')}</td><td>${incident.raison}</td></tr>`;
                 html += row;
             });
             container.innerHTML = html;

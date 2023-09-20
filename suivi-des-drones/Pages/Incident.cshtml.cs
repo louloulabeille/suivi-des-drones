@@ -24,7 +24,9 @@ namespace suivi_des_drones.Pages
 
         public JsonResult OnGet()
         {
-            return new JsonResult(new List<int>() { 1,2,5,9,7});
+            incidents.Clear();
+            incidents.AddRange(_incident.Take(5));
+            return new JsonResult(incidents);
         }
     }
 }

@@ -20,9 +20,15 @@ namespace suivi_des_drones.Core.Infrastructure.DataLayers
             return Context.Incidents.ToList();
         }
 
+        /// <summary>
+        /// Tri Descendant au niveau des dates d'accident et 
+        /// retourne x élément demandé
+        /// </summary>
+        /// <param name="nb">nombre d'élément demandé</param>
+        /// <returns></returns>
         public ICollection<Incident> Take(int nb)
         {
-            return Context.Incidents.Take(nb).ToList();
+            return Context.Incidents.Take(nb).OrderByDescending(x => x.DateIncident).ToList();
         }
 
         public ICollection<Incident> Take(Range range)

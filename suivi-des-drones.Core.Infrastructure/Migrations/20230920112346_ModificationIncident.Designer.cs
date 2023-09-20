@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using suivie_des_drones.Cores.Infrastructure.Database;
 
@@ -11,9 +12,11 @@ using suivie_des_drones.Cores.Infrastructure.Database;
 namespace suivi_des_drones.Core.Infrastructure.Migrations
 {
     [DbContext(typeof(DroneDbContext))]
-    partial class DroneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230920112346_ModificationIncident")]
+    partial class ModificationIncident
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
