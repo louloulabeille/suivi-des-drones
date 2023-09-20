@@ -66,6 +66,9 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
+// mise en place d'une route avec des options dedans par exemple on peut bloquer certains propiété
+// au niveau de url par exemple id > 5 cractères ou que des chiffres etc mise en place voir class MatriculeRouteConstraint
 builder.Services.Configure<RouteOptions>(options => {
 
     options.ConstraintMap.Add("matricule-contraint",typeof(MatriculeRouteConstraint));
@@ -86,7 +89,7 @@ app.UseStaticFiles();
 
 //app.UseStatusCodePages("text/html","<h1>Erreur Pas de POOOOO</h1> {0}"); prise en charge de l'erreur en production
 //app.UseStatusCodePagesWithReExecute("/Error");  // page par défaut dans le projet la meme que dans la section isDeveloppement
-app.UseStatusCodePagesWithRedirects("/Errors/{0}"); 
+app.UseStatusCodePagesWithRedirects("/Errors/{0}");  // mise en place error selon le code 404 - 400 - 500 etc créer les pages {0} 
 
 app.UseRouting();
 app.UseAuthentication();    // ajout de l'authentification de identity au niveau des pages 
