@@ -6,6 +6,8 @@ using suivi_des_drones.Core.Infrastructure.DataLayers;
 using suivie_des_drones.Cores.Interfaces.Repository;
 using suivi_des_drones.Core.Infrastructure;
 using suivi_des_drones.Core.Infrastructure.Web.Constraint;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthentificationUserContextConnection") 
@@ -16,6 +18,9 @@ builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 {
     options.Conventions.AddPageRoute("/NewDrone", "/creation-drone");   // redirection url
 });
+
+// logging - Nugets : Serilog & Serilog.Extensions.Logging.File
+builder.Logging.AddFile("Logs/suivie-de-drones-{Date}.txt", isJson: true);
 
 #region DbContext
 builder.Services.AddDbContext<DroneDbContext>(options =>
@@ -79,7 +84,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseStatusCodePages(); 
+//app.UseStatusCodePages("text/html","<h1>Erreur Pas de POOOOO</h1> {0}"); prise en charge de l'erreur en production
+//app.UseStatusCodePagesWithReExecute("/Error");  // page par défaut dans le projet la meme que dans la section isDeveloppement
+app.UseStatusCodePagesWithRedirects("/Errors/{0}"); 
 
 app.UseRouting();
 app.UseAuthentication();    // ajout de l'authentification de identity au niveau des pages 
