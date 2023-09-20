@@ -76,48 +76,4 @@
     </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Matricule</th>
-            <th>Status</th>
-            <th>Date de création</th>
-        </tr>
-        <tr>
-            <th> 
-                <select>
-                @foreach (var item in PrepaFiltreMatricule())
-                {
-                    <option value=@item>@item</option>
-                }
-                </select>
-            </th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in PrepaListDrone())
-        {
-            string style = item.Status.Id switch {
-                1 => "",
-                -1 => "text-danger",
-                _ => "text-warning"
-            };
-
-            // délégué templété
-            Func<dynamic, object> BrokenTd =@<td class="@style">@item.Status.Label</td>;
-
-            /*if (item.Status.Id == HealthStatus.Broken.Id)
-            {
-                style = "text-danger";
-            }*/
-            <tr>
-                <td><a asp-page="/OneDrone" asp-route-matricule="@item.Matricule">@item.Matricule</a></td>
-                <td>@item.CreationDate.ToString("dd/MM/yyyy")</td>
-                @BrokenTd(@item)
-            </tr>
-        }
-        
-    </tbody>
-</table>
+<partial name="_DronesTablePartial" model="this.PrepaListDrone()" model="this.PrepaFiltreMatricule()" />
