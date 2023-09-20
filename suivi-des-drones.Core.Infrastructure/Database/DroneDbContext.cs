@@ -23,6 +23,8 @@ namespace suivie_des_drones.Cores.Infrastructure.Database
         {
             modelBuilder.ApplyConfiguration<Drone>(new DroneEntityConfiguration());
             modelBuilder.ApplyConfiguration<HealthStatus>(new HealthStatusEntityConfiguration());
+            modelBuilder.ApplyConfiguration<Incident>(new IncidentEntityConfiguration());
+            modelBuilder.ApplyConfiguration<Login>(new LoginEntityConfiguration());
             //modelBuilder.Entity<Drone>().HasKey(item => item.Matricule);
         }
 
@@ -35,6 +37,7 @@ namespace suivie_des_drones.Cores.Infrastructure.Database
         public virtual DbSet<Drone> Drones { get; set; }
         public virtual DbSet<HealthStatus> HealthStatus { get; set; }
         public virtual DbSet<Login> Login { get; set; }
+        public virtual DbSet<Incident> Incidents { get; set; }
 
     }
 }

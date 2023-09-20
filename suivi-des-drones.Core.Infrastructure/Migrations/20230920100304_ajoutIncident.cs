@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace suivi_des_drones.Core.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitWithIdentity : Migration
+    public partial class ajoutIncident : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,7 +42,7 @@ namespace suivi_des_drones.Core.Infrastructure.Migrations
                 name: "Drone",
                 columns: table => new
                 {
-                    Matricule = table.Column<string>(type: "nvarchar(25)", nullable: false),
+                    Matricule = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -57,20 +57,51 @@ namespace suivi_des_drones.Core.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Incident",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DateIncident = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IdDrone = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    PathFichier = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Raison = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Incident", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Incident_Drone_IdDrone",
+                        column: x => x.IdDrone,
+                        principalTable: "Drone",
+                        principalColumn: "Matricule",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Drone_StatusId",
                 table: "Drone",
                 column: "StatusId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Incident_IdDrone",
+                table: "Incident",
+                column: "IdDrone",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Drone");
+                name: "Incident");
 
             migrationBuilder.DropTable(
                 name: "Login");
+
+            migrationBuilder.DropTable(
+                name: "Drone");
 
             migrationBuilder.DropTable(
                 name: "HealthStatus");

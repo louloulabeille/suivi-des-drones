@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace suivi_des_drones.Core.Models
         public int IdCustomer { get; set; }
         public string Rue { get; set; }
         public string? Complement { get; set; }
+
+        [DataType(DataType.PostalCode)]
         public string CodePostal { get; set; }
         public string Ville { get; set; }
         public string Pays { get; set; }

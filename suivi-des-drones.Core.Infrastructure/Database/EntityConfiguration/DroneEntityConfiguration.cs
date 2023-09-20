@@ -16,7 +16,7 @@ namespace suivi_des_drones.Core.Infrastructure.Database.EntityConfiguration
         {
             builder.HasKey(x => x.Matricule);
             builder.ToTable(nameof(Drone));
-            builder.Property(x => x.Matricule).IsRequired(true);
+            builder.Property(x => x.Matricule).IsRequired(true).HasMaxLength(25);
 
             builder.HasOne(x => x.Status)   // construction automatique des objects Healthstatus et de la liste drone dans HealthStatus
                 .WithMany(x => x.Drones)
