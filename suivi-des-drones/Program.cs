@@ -18,15 +18,11 @@ builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 {
     options.Conventions.AddPageRoute("/NewDrone", "/creation-drone");   // redirection url
 });
-
-// logging - Nugets : Serilog & Serilog.Extensions.Logging.File
-builder.Logging.AddFile("Logs/suivie-de-drones-{Date}.txt", isJson: true);
-
 #region DbContext
 builder.Services.AddDbContext<DroneDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration["Context:Sql"]);
-    
+    //options.UseSqlServer(builder.Configuration["Context:Sql"]);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthentificationDroneContextConnection"));
 });
 
 builder.Services.AddDbContext<AuthentificationUserContext>(options =>
@@ -40,6 +36,9 @@ builder.Services.AddDefaultIdentity<AuthentificationUser>(options => {
     // toutes les options au niveau de l'authentification qui peuvent mettre en place
         options.SignIn.RequireConfirmedAccount = true;
     }).AddEntityFrameworkStores<AuthentificationUserContext>();
+
+// logging - Nugets : Serilog & Serilog.Extensions.Logging.File
+builder.Logging.AddFile("Logs/suivie-de-drones-{Date}.txt", isJson: true);
 
 #region injection Model & WorkOfUnit & Repository
 // Drone
@@ -79,7 +78,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    //app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
