@@ -1,6 +1,6 @@
 ﻿@page
 @model suivi_des_drones.Pages.CreateIncidentModel
-@inject LinkGenerator linkeGenerator
+@* @inject LinkGenerator linkeGenerator *@
 @{
     ViewData["Title"] = "Déclaration d'incident";
     string title = "Déclaration d'incident de drones";
@@ -39,7 +39,7 @@
 </div>
 
 @section Scripts{
-    <script> // de l'ajax
+    @* <script> // de l'ajax
         class IncidentService {
             async loadAll() {
                 //const url = '@linkeGenerator.GetPathByPage(this.HttpContext,"Incident")';
@@ -69,6 +69,7 @@
             container.innerHTML = html;
         },timer);
         
-    </script>
+    </script> *@
+    <script src="~/js/incidentAjax.js"></script>
     <partial name="_ValidationScriptsPartial" />
 }

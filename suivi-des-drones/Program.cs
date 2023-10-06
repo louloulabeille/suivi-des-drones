@@ -8,6 +8,8 @@ using suivi_des_drones.Core.Infrastructure;
 using suivi_des_drones.Core.Infrastructure.Web.Constraint;
 using Serilog;
 using Microsoft.Extensions.Logging;
+using suivi_des_drones.Core.Infrastructure.Database;
+using suivi_des_drones.Instension;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AuthentificationUserContextConnection") 
@@ -38,10 +40,11 @@ builder.Services.AddDefaultIdentity<AuthentificationUser>(options => {
     }).AddEntityFrameworkStores<AuthentificationUserContext>();
 
 // logging - Nugets : Serilog & Serilog.Extensions.Logging.File
-builder.Logging.AddFile("Logs/suivie-de-drones-{Date}.txt", isJson: true);
+string pathSerilog = Path.Combine(builder.Environment.ContentRootPath,"Logs/suivie-de-drones-{Date}.txt");
+builder.Logging.AddFile(pathSerilog, isJson: true);
 
 #region injection Model & WorkOfUnit & Repository
-// Drone
+/*// Drone
 builder.Services.AddScoped<IDroneDataLayer, SqlServerDroneDataLayer>();
 builder.Services.AddScoped<IRepositoryDrone, DroneRepository>();
 // HealthStatus
@@ -55,7 +58,9 @@ builder.Services.AddScoped<IDelivreryDataLayer, SqlServerDelivreryDataLayer>();
 builder.Services.AddScoped<IRepositoryDelivrery, DelivreryRepository>();
 // Incident
 builder.Services.AddScoped<IIncidentDataLayer, SqlServerIncidentDataLayer>();
-builder.Services.AddScoped<IRepositoryIncident, IncidentRepository>();
+
+builder.Services.AddScoped<IRepositoryIncident, IncidentRepository>();*/
+builder.Services.AddScopedLayerRepository();
 #endregion
 
 // gestion des sessions
@@ -69,7 +74,6 @@ builder.Services.AddSession(options =>
 // mise en place d'une route avec des options dedans par exemple on peut bloquer certains propiété
 // au niveau de url par exemple id > 5 cractères ou que des chiffres etc mise en place voir class MatriculeRouteConstraint
 builder.Services.Configure<RouteOptions>(options => {
-
     options.ConstraintMap.Add("matricule-contraint",typeof(MatriculeRouteConstraint));
 });
 

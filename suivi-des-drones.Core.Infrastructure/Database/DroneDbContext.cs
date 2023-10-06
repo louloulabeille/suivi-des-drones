@@ -26,6 +26,9 @@ namespace suivie_des_drones.Cores.Infrastructure.Database
             modelBuilder.ApplyConfiguration<Incident>(new IncidentEntityConfiguration());
             modelBuilder.ApplyConfiguration<Login>(new LoginEntityConfiguration());
             //modelBuilder.Entity<Drone>().HasKey(item => item.Matricule);
+
+           /* modelBuilder.ApplyConfiguration<Selfie>(new SelfieEntityconfiguration());
+            modelBuilder.ApplyConfiguration<Wookie>(new WookieEntityconfiguration());*/
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -38,6 +41,7 @@ namespace suivie_des_drones.Cores.Infrastructure.Database
         public virtual DbSet<HealthStatus> HealthStatus { get; set; }
         public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<Incident> Incidents { get; set; }
+
 
     }
 }
